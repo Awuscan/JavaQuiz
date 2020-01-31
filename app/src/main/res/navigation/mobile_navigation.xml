@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.moch.javaquiz.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_lectures"
+        android:name="com.moch.javaquiz.ui.lectures.LecturesFragment"
+        android:label="@string/menu_lectures"
+        tools:layout="@layout/fragment_lectures" />
+
+    <fragment
+        android:id="@+id/nav_tests"
+        android:name="com.moch.javaquiz.ui.tests.TestsFragment"
+        android:label="@string/menu_tests"
+        tools:layout="@layout/fragment_tests" />
+
+    <fragment
+        android:id="@+id/nav_labs"
+        android:name="com.moch.javaquiz.ui.labs.LabsFragment"
+        android:label="@string/menu_labs"
+        tools:layout="@layout/fragment_tools" />
+
+</navigation>

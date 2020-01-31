@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">JavaQuiz</string>
+    <string name="nav_header_title">Technologie Web i Java</string>
+    <string name="nav_header_subtitle">Prowadzący: dr hab. inż. Jan Prokop, prof. PRz</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_lectures">Lectures</string>
+    <string name="menu_tests">Tests</string>
+    <string name="menu_labs">Lab Instructions</string>
+
+</resources>
