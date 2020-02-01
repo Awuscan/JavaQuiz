@@ -4,9 +4,18 @@
     <string name="nav_header_subtitle">Prowadzący: dr hab. inż. Jan Prokop, prof. PRz</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_lectures">Lectures</string>
-    <string name="menu_tests">Tests</string>
-    <string name="menu_labs">Lab Instructions</string>
+    <string name="menu_home">Aktualności</string>
+    <string name="menu_lectures">Wykłady</string>
+    <string name="menu_quiz">Test</string>
+    <string name="menu_labs">Instrukcje laboratoryjne</string>
+    <string name="buttonStartQuiz">Rozpocznij Quiz</string>
+    <string name="test_title">Przykładowe pytania na egzaminie</string>
+    <string name="check_answer">Sprawdź</string>
+    <string name="next_question">Następne pytanie</string>
+    <string name="finish">Zakończ</string>
+    <string name="question">Pytanie: </string>
+    <string name="result">Wynik: </string>
+    <string name="exit">Naciśnij jeszcze raz, aby zamknąć aplikację.</string>
+
 
 </resources>
