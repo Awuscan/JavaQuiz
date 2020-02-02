@@ -7,17 +7,23 @@ public class Question {
     private String option2;
     private String option3;
     private String option4;
-    private int answer;
+    private boolean answer1;
+    private boolean answer2;
+    private boolean answer3;
+    private boolean answer4;
 
     public Question() {}
 
-    public Question(String question, String option1, String option2, String option3, String option4, int answer) {
+    public Question(String question, String option1, String option2, String option3, String option4, boolean answer1, boolean answer2, boolean answer3, boolean answer4) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
-        this.answer = answer;
+        this.answer1 = answer1;
+        this.answer2 = answer2;
+        this.answer3 = answer3;
+        this.answer4 = answer4;
     }
 
     public String getQuestion() {
@@ -60,11 +66,35 @@ public class Question {
         this.option4 = option4;
     }
 
-    public int getAnswer() {
-        return answer;
+    public boolean isAnswer1() {
+        return answer1;
     }
 
-    public void setAnswer(int answer) {
-        this.answer = answer;
+    public void setAnswer1(boolean answer1) {
+        this.answer1 = answer1;
+    }
+
+    public boolean isAnswer2() {
+        return answer2;
+    }
+
+    public void setAnswer2(boolean answer2) {
+        this.answer2 = answer2;
+    }
+
+    public boolean isAnswer3() {
+        return answer3;
+    }
+
+    public void setAnswer3(boolean answer3) {
+        this.answer3 = answer3;
+    }
+
+    public boolean isAnswer4() {
+        return answer4;
+    }
+
+    public void setAnswer4(boolean answer4) {
+        this.answer4 = answer4;
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -27,10 +28,10 @@ public class QuestionFragment extends Fragment {
     private TextView textCount;
     private TextView textQuestion;
     private RadioGroup rbGroup;
-    private RadioButton rb1;
-    private RadioButton rb2;
-    private RadioButton rb3;
-    private RadioButton rb4;
+    private CheckBox cb1;
+    private CheckBox cb2;
+    private CheckBox cb3;
+    private CheckBox cb4;
     private Button buttonNext;
 
     private List<Question> questionList;
@@ -40,7 +41,7 @@ public class QuestionFragment extends Fragment {
 
     private int result;
     private boolean answered;
-    
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_question, container, false);
@@ -49,10 +50,10 @@ public class QuestionFragment extends Fragment {
         textCount = root.findViewById(R.id.text_count);
         textQuestion = root.findViewById(R.id.text_question);
         rbGroup = root.findViewById(R.id.radio_group);
-        rb1 = root.findViewById(R.id.radio_button1);
-        rb2 = root.findViewById(R.id.radio_button2);
-        rb3 = root.findViewById(R.id.radio_button3);
-        rb4 = root.findViewById(R.id.radio_button4);
+        cb1 = root.findViewById(R.id.checkBox1);
+        cb2 = root.findViewById(R.id.checkBox2);
+        cb3 = root.findViewById(R.id.checkBox3);
+        cb4 = root.findViewById(R.id.checkBox4);
         buttonNext = root.findViewById(R.id.button_next);
 
         questionList = ((MainActivity)getActivity()).dbHelper.getAllQuestions();
@@ -67,7 +68,7 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!answered) {
-                    if (rb1.isChecked() || rb2.isChecked() || rb3.isChecked() || rb4.isChecked()) {
+                    if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked() || cb4.isChecked()) {
                         checkAnswer();
                     }
                 } else {
@@ -81,26 +82,29 @@ public class QuestionFragment extends Fragment {
     }
 
     private void showNextQuestion() {
-        rbGroup.clearCheck();
+        cb1.setChecked(false);
+        cb2.setChecked(false);
+        cb3.setChecked(false);
+        cb4.setChecked(false);
 
-        rb1.setEnabled(true);
-        rb2.setEnabled(true);
-        rb3.setEnabled(true);
-        rb4.setEnabled(true);
+        cb1.setEnabled(true);
+        cb2.setEnabled(true);
+        cb3.setEnabled(true);
+        cb4.setEnabled(true);
 
-        rb1.setTextColor(getResources().getColor(R.color.colorText));
-        rb2.setTextColor(getResources().getColor(R.color.colorText));
-        rb3.setTextColor(getResources().getColor(R.color.colorText));
-        rb4.setTextColor(getResources().getColor(R.color.colorText));
+        cb1.setTextColor(getResources().getColor(R.color.colorText));
+        cb2.setTextColor(getResources().getColor(R.color.colorText));
+        cb3.setTextColor(getResources().getColor(R.color.colorText));
+        cb4.setTextColor(getResources().getColor(R.color.colorText));
 
         if (questionCounter < questionTotal) {
             currentQuestion = questionList.get(questionCounter);
 
             textQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
-            rb4.setText(currentQuestion.getOption4());
+            cb1.setText(currentQuestion.getOption1());
+            cb2.setText(currentQuestion.getOption2());
+            cb3.setText(currentQuestion.getOption3());
+            cb4.setText(currentQuestion.getOption4());
 
             questionCounter++;
 
@@ -118,39 +122,44 @@ public class QuestionFragment extends Fragment {
     private void checkAnswer() {
         answered = true;
 
-        rb1.setEnabled(false);
-        rb2.setEnabled(false);
-        rb3.setEnabled(false);
-        rb4.setEnabled(false);
+        cb1.setEnabled(false);
+        cb2.setEnabled(false);
+        cb3.setEnabled(false);
+        cb4.setEnabled(false);
 
-        RadioButton rbChecked= root.findViewById(rbGroup.getCheckedRadioButtonId());
-        int answerNr = rbGroup.indexOfChild(rbChecked) + 1;
-
-        if (answerNr == currentQuestion.getAnswer()) {
+        if (    currentQuestion.isAnswer1() == cb1.isChecked() &&
+                currentQuestion.isAnswer2() == cb2.isChecked() &&
+                currentQuestion.isAnswer3() == cb3.isChecked() &&
+                currentQuestion.isAnswer4() == cb4.isChecked() ){
             result++;
             String string = getResources().getText(R.string.result).toString() + result + "/" + questionTotal;
             textResult.setText(string);
         }
 
-        rb1.setTextColor(getResources().getColor(R.color.colorTextWrong));
-        rb2.setTextColor(getResources().getColor(R.color.colorTextWrong));
-        rb3.setTextColor(getResources().getColor(R.color.colorTextWrong));
-        rb4.setTextColor(getResources().getColor(R.color.colorTextWrong));
-
-        switch (currentQuestion.getAnswer()) {
-            case 1:
-                rb1.setTextColor(getResources().getColor(R.color.colorTextRight));
-                break;
-            case 2:
-                rb2.setTextColor(getResources().getColor(R.color.colorTextRight));
-                break;
-            case 3:
-                rb3.setTextColor(getResources().getColor(R.color.colorTextRight));
-                break;
-            case 4:
-                rb4.setTextColor(getResources().getColor(R.color.colorTextRight));
-                break;
+        if (currentQuestion.isAnswer1()){
+            cb1.setTextColor(getResources().getColor(R.color.colorTextRight));
+        }else{
+            cb1.setTextColor(getResources().getColor(R.color.colorTextWrong));
         }
+
+        if (currentQuestion.isAnswer2()){
+            cb2.setTextColor(getResources().getColor(R.color.colorTextRight));
+        }else{
+            cb2.setTextColor(getResources().getColor(R.color.colorTextWrong));
+        }
+
+        if (currentQuestion.isAnswer3()){
+            cb3.setTextColor(getResources().getColor(R.color.colorTextRight));
+        }else{
+            cb3.setTextColor(getResources().getColor(R.color.colorTextWrong));
+        }
+
+        if (currentQuestion.isAnswer4()){
+            cb4.setTextColor(getResources().getColor(R.color.colorTextRight));
+        }else{
+            cb4.setTextColor(getResources().getColor(R.color.colorTextWrong));
+        }
+
 
         if (questionCounter < questionTotal) {
             buttonNext.setText(getResources().getText(R.string.next_question).toString());

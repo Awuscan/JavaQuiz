@@ -21,7 +21,10 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_OPTION2 = "option2";
     private static final String COLUMN_OPTION3  ="option3";
     private static final String COLUMN_OPTION4  = "option4";
-    private static final String COLUMN_ANSWER  = "answer";
+    private static final String COLUMN_ANSWER1  = "answer1";
+    private static final String COLUMN_ANSWER2  = "answer2";
+    private static final String COLUMN_ANSWER3  = "answer3";
+    private static final String COLUMN_ANSWER4  = "answer4";
     private static final String COLUMN_IMAGE  = "image";
 
     private SQLiteDatabase db;
@@ -42,7 +45,10 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 COLUMN_OPTION2 + " TEXT, " +
                 COLUMN_OPTION3 + " TEXT, " +
                 COLUMN_OPTION4 + " TEXT, " +
-                COLUMN_ANSWER + " INTEGER" +
+                COLUMN_ANSWER1 + " INTEGER," +
+                COLUMN_ANSWER2 + " INTEGER," +
+                COLUMN_ANSWER3 + " INTEGER," +
+                COLUMN_ANSWER4 + " INTEGER" +
                 ")";
 
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
@@ -56,10 +62,12 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     }
 
     private void fillQuestionsTable() {
-        Question q1 = new Question("A is correct","A", "B", "C", "D", 1);
+        Question q1 = new Question("A is correct","A", "B", "C", "D", true, false, false, false);
         addQuestion(q1);
-        Question q2 = new Question("B is correct", "A", "B", "C", "D", 2);
+        Question q2 = new Question("B is correct", "A", "B", "C", "D",false, true, false, false);
         addQuestion(q2);
+        Question q3 = new Question("C and D is correct", "A", "B", "C", "D",false, false, true, true);
+        addQuestion(q3);
     }
 
     private void addQuestion(Question question) {
@@ -69,7 +77,10 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         cv.put(COLUMN_OPTION2, question.getOption2());
         cv.put(COLUMN_OPTION3, question.getOption3());
         cv.put(COLUMN_OPTION4, question.getOption4());
-        cv.put(COLUMN_ANSWER, question.getAnswer());
+        cv.put(COLUMN_ANSWER1, boolToInt(question.isAnswer1()));
+        cv.put(COLUMN_ANSWER2, boolToInt(question.isAnswer2()));
+        cv.put(COLUMN_ANSWER3, boolToInt(question.isAnswer3()));
+        cv.put(COLUMN_ANSWER4, boolToInt(question.isAnswer4()));
         db.insert(TABLE_NAME, null, cv);
     }
 
@@ -86,13 +97,24 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 question.setOption2(c.getString(c.getColumnIndex(COLUMN_OPTION2)));
                 question.setOption3(c.getString(c.getColumnIndex(COLUMN_OPTION3)));
                 question.setOption4(c.getString(c.getColumnIndex(COLUMN_OPTION4)));
-                question.setAnswer(c.getInt(c.getColumnIndex(COLUMN_ANSWER)));
+                question.setAnswer1(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER1))));
+                question.setAnswer2(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER2))));
+                question.setAnswer3(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER3))));
+                question.setAnswer4(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER4))));
                 questionList.add(question);
             } while (c.moveToNext());
         }
 
         c.close();
         return questionList;
+    }
+
+    private boolean intToBool(int i){
+        return i == 1;
+    }
+
+    private int boolToInt(boolean state){
+        return state ? 1 : 0;
     }
 
 }
