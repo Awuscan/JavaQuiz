@@ -3,6 +3,7 @@ package com.moch.javaquiz;
 public class Question {
 
     private String question;
+    private String category;
     private String option1;
     private String option2;
     private String option3;
@@ -14,8 +15,9 @@ public class Question {
 
     public Question() {}
 
-    public Question(String question, String option1, String option2, String option3, String option4, boolean answer1, boolean answer2, boolean answer3, boolean answer4) {
+    public Question(String question, String category, String option1, String option2, String option3, String option4, boolean answer1, boolean answer2, boolean answer3, boolean answer4) {
         this.question = question;
+        this.category = category;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
@@ -32,6 +34,14 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String Category) {
+        this.category = Category;
     }
 
     public String getOption1() {
@@ -97,4 +107,5 @@ public class Question {
     public void setAnswer4(boolean answer4) {
         this.answer4 = answer4;
     }
+
 }

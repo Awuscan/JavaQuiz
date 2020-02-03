@@ -27,6 +27,6 @@
         android:id="@+id/nav_labs"
         android:name="com.moch.javaquiz.fragments.LabsFragment"
         android:label="@string/menu_labs"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/fragment_labs" />
 
 </navigation>

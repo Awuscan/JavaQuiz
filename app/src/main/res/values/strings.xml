@@ -13,9 +13,7 @@
     <string name="check_answer">Sprawdź</string>
     <string name="next_question">Następne pytanie</string>
     <string name="finish">Zakończ</string>
-    <string name="question">Pytanie: </string>
+    <string name="question">Pytanie:</string>
     <string name="result">Wynik: </string>
     <string name="exit">Naciśnij jeszcze raz, aby zamknąć aplikację.</string>
-
-
 </resources>

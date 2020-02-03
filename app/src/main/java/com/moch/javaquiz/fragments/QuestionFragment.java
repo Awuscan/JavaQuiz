@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -22,12 +20,9 @@ import java.util.List;
 
 public class QuestionFragment extends Fragment {
 
-    private View root;
-
     private TextView textResult;
     private TextView textCount;
     private TextView textQuestion;
-    private RadioGroup rbGroup;
     private CheckBox cb1;
     private CheckBox cb2;
     private CheckBox cb3;
@@ -46,18 +41,29 @@ public class QuestionFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_question, container, false);
 
+        Bundle bundle = this.getArguments();
+        String category = null;
+        if (bundle != null) {
+             category = bundle.getString("category", null);
+        }else{
+            finishQuiz();
+        }
+
         textResult = root.findViewById(R.id.text_score);
         textCount = root.findViewById(R.id.text_count);
         textQuestion = root.findViewById(R.id.text_question);
-        rbGroup = root.findViewById(R.id.radio_group);
         cb1 = root.findViewById(R.id.checkBox1);
         cb2 = root.findViewById(R.id.checkBox2);
         cb3 = root.findViewById(R.id.checkBox3);
         cb4 = root.findViewById(R.id.checkBox4);
         buttonNext = root.findViewById(R.id.button_next);
 
-        questionList = ((MainActivity)getActivity()).dbHelper.getAllQuestions();
+        questionList = ((MainActivity)getActivity()).dbHelper.getCategoryQuestions(category);
         questionTotal = questionList.size();
+
+        if (questionTotal == 0){
+            finishQuiz();
+        }
         questionCounter = 0;
 
         showNextQuestion();
@@ -77,7 +83,6 @@ public class QuestionFragment extends Fragment {
             }
         });
 
-        this.root = root;
         return root;
     }
 
