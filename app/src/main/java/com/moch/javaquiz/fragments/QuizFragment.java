@@ -34,8 +34,8 @@ public class QuizFragment extends Fragment {
 
         spinnerCategory.setAdapter(
                 new ArrayAdapter<>(getActivity().getBaseContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                ((MainActivity)getActivity()).dbHelper.getAllCategories()));
+                        android.R.layout.simple_spinner_dropdown_item,
+                        ((MainActivity) getActivity()).dbHelper.getAllCategories()));
 
         spinnerCategory.setSelection(0);
 
@@ -50,6 +50,7 @@ public class QuizFragment extends Fragment {
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.remove(this);
         transaction.replace(R.id.nav_host_fragment, newFragment);
         transaction.commit();
     }

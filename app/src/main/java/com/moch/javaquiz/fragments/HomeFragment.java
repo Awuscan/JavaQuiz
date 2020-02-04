@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
@@ -24,7 +23,7 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView rv = root.findViewById(R.id.recycleViewNotice);
 
-        List<Notice> noticeList = ((MainActivity)getActivity()).dbHelper.getAllNotices();
+        List<Notice> noticeList = ((MainActivity) getActivity()).dbHelper.getAllNotices();
 
         NoticeAdapter na = new NoticeAdapter(noticeList);
         rv.setAdapter(na);

@@ -17,21 +17,21 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME_QUESTIONS = "Questions";
     private static final String ID = "id";
-    private static final String COLUMN_QUESTION  = "question";
-    private static final String COLUMN_CATEGORY  = "category";
-    private static final String COLUMN_OPTION1  = "option1";
+    private static final String COLUMN_QUESTION = "question";
+    private static final String COLUMN_CATEGORY = "category";
+    private static final String COLUMN_OPTION1 = "option1";
     private static final String COLUMN_OPTION2 = "option2";
-    private static final String COLUMN_OPTION3  ="option3";
-    private static final String COLUMN_OPTION4  = "option4";
-    private static final String COLUMN_ANSWER1  = "answer1";
-    private static final String COLUMN_ANSWER2  = "answer2";
-    private static final String COLUMN_ANSWER3  = "answer3";
-    private static final String COLUMN_ANSWER4  = "answer4";
+    private static final String COLUMN_OPTION3 = "option3";
+    private static final String COLUMN_OPTION4 = "option4";
+    private static final String COLUMN_ANSWER1 = "answer1";
+    private static final String COLUMN_ANSWER2 = "answer2";
+    private static final String COLUMN_ANSWER3 = "answer3";
+    private static final String COLUMN_ANSWER4 = "answer4";
 
-    private static final String TABLE_NAME_NOTICES  = "Notices";
-    private static final String COLUMN_DATE  = "date";
-    private static final String COLUMN_TITLE  = "title";
-    private static final String COLUMN_MESSAGE  = "message";
+    private static final String TABLE_NAME_NOTICES = "Notices";
+    private static final String COLUMN_DATE = "date";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_MESSAGE = "message";
 
     private SQLiteDatabase db;
 
@@ -69,7 +69,6 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         db.execSQL(SQL_CREATE_NOTICES_TABLE);
 
-        fillQuestionsTable();
         fillNoticesTable();
     }
 
@@ -80,25 +79,30 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void fillQuestionsTable(List<Question> questions) {
+        for(Question question : questions){
+            addQuestion(question);
+        }
+    }
+
     private void fillQuestionsTable() {
         Question q1 = new Question("This is Question number 1. There are 4 answers down below, but only one is correct. Guess which one!\n A is correct", "Java", "This is answer A. Lest find out if it fits. Maybe it won't fit. Let's hope it does fit.", "B", "C", "D", true, false, false, false);
         addQuestion(q1);
-        Question q2 = new Question("B is correct", "Web", "A", "B", "C", "D",false, true, false, false);
+        Question q2 = new Question("B is correct", "Web", "A", "B", "C", "D", false, true, false, false);
         addQuestion(q2);
-        Question q3 = new Question("C and D is correct", "Java", "A", "B", "C", "D",false, false, true, true);
+        Question q3 = new Question("C and D is correct", "Java", "A", "B", "C", "D", false, false, true, true);
         addQuestion(q3);
-        Question q4 = new Question("A and D is correct", "Web", "A", "B", "C", "D",true, false, false, true);
+        Question q4 = new Question("A and D is correct", "Web", "A", "B", "C", "D", true, false, false, true);
         addQuestion(q4);
     }
 
     private void fillNoticesTable() {
-        Notice n1= new Notice("30-10-2019","Aktualizacja pytań","W bazie danych pojawiły się nowe pytania. Aktualna liczba pytań w bazie wynosi 120.");
+        Notice n1 = new Notice("30-10-2019", "Aktualizacja pytań", "W bazie danych pojawiły się nowe pytania. Aktualna liczba pytań w bazie wynosi 120.");
         addNotice(n1);
-        Notice n2 = new Notice("05-01-2020","Termin Egzaminu","Termin I: 05.01.2020, godzina 12, sala B300/B305 \nTermin II: 12.01.2020, godzina 12, sala B300/B305 \nProszę nie zapomnieć o dokumencie tożsamości!");
+        Notice n2 = new Notice("05-01-2020", "Termin Egzaminu", "Termin I: 05.01.2020, godzina 12, sala B300/B305 \nTermin II: 12.01.2020, godzina 12, sala B300/B305 \nProszę nie zapomnieć o dokumencie tożsamości!");
         addNotice(n2);
-        Notice n3 = new Notice("08-01-2020","Wyniki Egzaminu w I terminie","Wyniki do wglądu w USOS'ie. \nZapraszam na poprawe.");
+        Notice n3 = new Notice("08-01-2020", "Wyniki Egzaminu w I terminie", "Wyniki do wglądu w USOS'ie. \nZapraszam na poprawe.");
         addNotice(n3);
-
     }
 
     private void addQuestion(Question question) {
@@ -161,7 +165,6 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 notice.setDate(c.getString(c.getColumnIndex(COLUMN_DATE)));
                 notice.setTitle(c.getString(c.getColumnIndex(COLUMN_TITLE)));
                 notice.setMessage(c.getString(c.getColumnIndex(COLUMN_MESSAGE)));
-
                 noticesList.add(notice);
             } while (c.moveToNext());
         }
@@ -173,7 +176,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     public List<Question> getCategoryQuestions(String category) {
         List<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=?", new String[] {category});
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=?", new String[]{category});
 
         if (c.moveToFirst()) {
             do {
@@ -210,11 +213,11 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         return categories;
     }
 
-    private boolean intToBool(int i){
-        return i == 1;
+    private boolean intToBool(int i) {
+        return i >= 1;
     }
 
-    private int boolToInt(boolean state){
+    private int boolToInt(boolean state) {
         return state ? 1 : 0;
     }
 

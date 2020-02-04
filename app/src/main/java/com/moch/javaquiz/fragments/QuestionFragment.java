@@ -44,8 +44,8 @@ public class QuestionFragment extends Fragment {
         Bundle bundle = this.getArguments();
         String category = null;
         if (bundle != null) {
-             category = bundle.getString("category", null);
-        }else{
+            category = bundle.getString("category", null);
+        } else {
             finishQuiz();
         }
 
@@ -58,10 +58,10 @@ public class QuestionFragment extends Fragment {
         cb4 = root.findViewById(R.id.checkBox4);
         buttonNext = root.findViewById(R.id.button_next);
 
-        questionList = ((MainActivity)getActivity()).dbHelper.getCategoryQuestions(category);
+        questionList = ((MainActivity) getActivity()).dbHelper.getCategoryQuestions(category);
         questionTotal = questionList.size();
 
-        if (questionTotal == 0){
+        if (questionTotal == 0) {
             finishQuiz();
         }
         questionCounter = 0;
@@ -132,36 +132,36 @@ public class QuestionFragment extends Fragment {
         cb3.setEnabled(false);
         cb4.setEnabled(false);
 
-        if (    currentQuestion.isAnswer1() == cb1.isChecked() &&
+        if (currentQuestion.isAnswer1() == cb1.isChecked() &&
                 currentQuestion.isAnswer2() == cb2.isChecked() &&
                 currentQuestion.isAnswer3() == cb3.isChecked() &&
-                currentQuestion.isAnswer4() == cb4.isChecked() ){
+                currentQuestion.isAnswer4() == cb4.isChecked()) {
             result++;
             String string = getResources().getText(R.string.result).toString() + result + "/" + questionTotal;
             textResult.setText(string);
         }
 
-        if (currentQuestion.isAnswer1()){
+        if (currentQuestion.isAnswer1()) {
             cb1.setTextColor(getResources().getColor(R.color.colorTextRight));
-        }else{
+        } else {
             cb1.setTextColor(getResources().getColor(R.color.colorTextWrong));
         }
 
-        if (currentQuestion.isAnswer2()){
+        if (currentQuestion.isAnswer2()) {
             cb2.setTextColor(getResources().getColor(R.color.colorTextRight));
-        }else{
+        } else {
             cb2.setTextColor(getResources().getColor(R.color.colorTextWrong));
         }
 
-        if (currentQuestion.isAnswer3()){
+        if (currentQuestion.isAnswer3()) {
             cb3.setTextColor(getResources().getColor(R.color.colorTextRight));
-        }else{
+        } else {
             cb3.setTextColor(getResources().getColor(R.color.colorTextWrong));
         }
 
-        if (currentQuestion.isAnswer4()){
+        if (currentQuestion.isAnswer4()) {
             cb4.setTextColor(getResources().getColor(R.color.colorTextRight));
-        }else{
+        } else {
             cb4.setTextColor(getResources().getColor(R.color.colorTextWrong));
         }
 
@@ -176,6 +176,7 @@ public class QuestionFragment extends Fragment {
     private void finishQuiz() {
         Fragment newFragment = new QuizFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.remove(this);
         transaction.replace(R.id.nav_host_fragment, newFragment);
         transaction.commit();
     }
