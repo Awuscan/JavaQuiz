@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JavaQuiz.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 10;
 
     private static final String TABLE_NAME_QUESTIONS = "Questions";
     private static final String ID = "id";
@@ -80,13 +81,14 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     }
 
     public void fillQuestionsTable(List<Question> questions) {
+        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
         for(Question question : questions){
             addQuestion(question);
         }
     }
 
     private void fillQuestionsTable() {
-        Question q1 = new Question("This is Question number 1. There are 4 answers down below, but only one is correct. Guess which one!\n A is correct", "Java", "This is answer A. Lest find out if it fits. Maybe it won't fit. Let's hope it does fit.", "B", "C", "D", true, false, false, false);
+        Question q1 = new Question("A is correct", "Java", "A.", "B", "C", "D", true, false, false, false);
         addQuestion(q1);
         Question q2 = new Question("B is correct", "Web", "A", "B", "C", "D", false, true, false, false);
         addQuestion(q2);
@@ -94,6 +96,8 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         addQuestion(q3);
         Question q4 = new Question("A and D is correct", "Web", "A", "B", "C", "D", true, false, false, true);
         addQuestion(q4);
+        Question q5 = new Question("A and D is correct", "Java", "A", "B", "C", "D", true, false, false, true);
+        addQuestion(q5);
     }
 
     private void fillNoticesTable() {
@@ -175,8 +179,36 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     public List<Question> getCategoryQuestions(String category) {
         List<Question> questionList = new ArrayList<>();
+
+            db = getReadableDatabase();
+            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=?", new String[]{category});
+
+            if (c.moveToFirst()) {
+                do {
+                    Question question = new Question();
+                    question.setQuestion(c.getString(c.getColumnIndex(COLUMN_QUESTION)));
+                    question.setCategory(c.getString(c.getColumnIndex(COLUMN_CATEGORY)));
+                    question.setOption1(c.getString(c.getColumnIndex(COLUMN_OPTION1)));
+                    question.setOption2(c.getString(c.getColumnIndex(COLUMN_OPTION2)));
+                    question.setOption3(c.getString(c.getColumnIndex(COLUMN_OPTION3)));
+                    question.setOption4(c.getString(c.getColumnIndex(COLUMN_OPTION4)));
+                    question.setAnswer1(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER1))));
+                    question.setAnswer2(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER2))));
+                    question.setAnswer3(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER3))));
+                    question.setAnswer4(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER4))));
+                    questionList.add(question);
+                } while (c.moveToNext());
+            }
+
+            c.close();
+
+        return questionList;
+    }
+
+    public List<Question> getCategoryQuestions(String category, int number) {
+        List<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=?", new String[]{category});
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=? ORDER BY RANDOM() LIMIT ?", new String[]{category, Integer.toString(number) });
 
         if (c.moveToFirst()) {
             do {

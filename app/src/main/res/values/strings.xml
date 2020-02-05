@@ -16,4 +16,6 @@
     <string name="question">Pytanie:</string>
     <string name="result">Wynik: </string>
     <string name="exit">Naciśnij jeszcze raz, aby zamknąć aplikację.</string>
+    <string name="buttonNextSlide">Następny Slajd</string>
+    <string name="buttonPreviousSlide">Poprzedni Slajd</string>
 </resources>

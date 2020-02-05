@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
 
     public JavaQuizDBHandler dbHelper;
-    //public MySQLDBHandler mySQLHelper;
+    public jsonHandler jsonHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         dbHelper = new JavaQuizDBHandler(this);
-        //mySQLHelper = new MySQLDBHandler();
-
-
+        jsonHelper = new jsonHandler();
+        jsonHelper.save(dbHelper);
 
     }
 
