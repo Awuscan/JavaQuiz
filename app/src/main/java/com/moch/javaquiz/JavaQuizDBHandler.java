@@ -181,7 +181,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         List<Question> questionList = new ArrayList<>();
 
             db = getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=?", new String[]{category});
+            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=? ORDER BY RANDOM()", new String[]{category});
 
             if (c.moveToFirst()) {
                 do {

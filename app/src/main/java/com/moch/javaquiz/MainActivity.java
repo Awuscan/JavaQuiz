@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     private long backPressedTime;
 
-    public JavaQuizDBHandler dbHelper;
-    public jsonHandler jsonHelper;
+    public static JavaQuizDBHandler dbHelper;
+    public static jsonHandler jsonHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_lectures, R.id.nav_tests,
+                R.id.nav_home,
+                R.id.nav_quiz,
+                R.id.nav_lectures,
                 R.id.nav_labs)
                 .setDrawerLayout(drawer)
                 .build();

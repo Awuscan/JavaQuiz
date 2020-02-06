@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_lectures" />
 
     <fragment
-        android:id="@+id/nav_tests"
+        android:id="@+id/nav_quiz"
         android:name="com.moch.javaquiz.fragments.QuizFragment"
         android:label="@string/menu_quiz"
         tools:layout="@layout/fragment_quiz" />

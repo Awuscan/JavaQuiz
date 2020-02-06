@@ -21,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
 interface AsyncResponse {
     void processFinish(String output);
 }
