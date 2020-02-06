@@ -64,7 +64,7 @@ class HttpsPostAsyncTask extends AsyncTask<String, Void, Void> {
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
                 String response = convertInputStreamToString(inputStream);
-
+                Log.d("Response", response);
                 onPostExecute(response);
 
             } else {

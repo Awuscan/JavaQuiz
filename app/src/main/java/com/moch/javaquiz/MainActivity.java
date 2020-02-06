@@ -50,10 +50,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         dbHelper = new JavaQuizDBHandler(this);
         jsonHelper = new jsonHandler();
 
-        Map<String, String> postData = new HashMap<>();
-        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
-        asyncTask.delegate = this;
-        asyncTask.execute(urlWebService);
+
 
 
 
@@ -62,7 +59,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     protected void onResume() {
         super.onResume();
 
-        //etQuizQuestions();
+        Map<String, String> postData = new HashMap<>();
+        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
+        asyncTask.delegate = this;
+        asyncTask.execute(urlWebService);
     }
 
     @Override
