@@ -11,12 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private AppBarConfiguration mAppBarConfiguration;
-
     private long backPressedTime;
 
+    private static final String urlWebService = "https://8879ae19.ngrok.io/getAllQuestions.php";
     public static JavaQuizDBHandler dbHelper;
     public static jsonHandler jsonHelper;
 
@@ -42,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new JavaQuizDBHandler(this);
         jsonHelper = new jsonHandler();
-        jsonHelper.save(dbHelper);
 
+        getQuizQuestions();
     }
 
     @Override
@@ -62,6 +67,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    public void getQuizQuestions() {
+        Map<String, String> postData = new HashMap<>();
+        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
+        asyncTask.delegate = this;
+        asyncTask.execute(urlWebService);
+    }
+
+    @Override
+    public void processFinish(String output) {
+        try {
+            dbHelper.fillQuestionsTable(jsonHelper.getQuestions(output));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
