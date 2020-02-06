@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                //R.id.nav_home,
+                R.id.nav_home,
                 R.id.nav_quiz,
                 R.id.nav_lectures,
                 R.id.nav_labs)
@@ -89,17 +89,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(String output) {
-        if(output!="badCode") {
-
-            try {
-                Log.d("dbHelperbefore Response", output);
-                List<Question> questions = jsonHelper.getQuestions(output);
-                dbHelper.fillQuestionsTable(questions);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-
+        try {
+            List<Question> questions = jsonHelper.getQuestions(output);
+            dbHelper.fillQuestionsTable(questions);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

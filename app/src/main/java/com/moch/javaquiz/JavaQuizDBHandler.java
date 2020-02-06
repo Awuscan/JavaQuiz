@@ -81,7 +81,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     }
 
     public void fillQuestionsTable(List<Question> questions) {
-        //db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
+        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
         for(Question question : questions){
             addQuestion(question);
         }
