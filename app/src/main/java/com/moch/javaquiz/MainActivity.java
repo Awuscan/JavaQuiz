@@ -9,11 +9,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
@@ -22,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private long backPressedTime;
 
     private static final String urlWebService = "https://8879ae19.ngrok.io/getAllQuestions.php";
-    public static JavaQuizDBHandler dbHelper;
-    public static jsonHandler jsonHelper;
+    public JavaQuizDBHandler dbHelper;
+    public jsonHandler jsonHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
+                //R.id.nav_home,
                 R.id.nav_quiz,
                 R.id.nav_lectures,
                 R.id.nav_labs)
@@ -48,7 +50,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         dbHelper = new JavaQuizDBHandler(this);
         jsonHelper = new jsonHandler();
 
-        getQuizQuestions();
+        Map<String, String> postData = new HashMap<>();
+        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
+        asyncTask.delegate = this;
+        asyncTask.execute(urlWebService);
+
+
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //etQuizQuestions();
     }
 
     @Override
@@ -70,18 +84,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void getQuizQuestions() {
-        Map<String, String> postData = new HashMap<>();
-        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
-        asyncTask.delegate = this;
-        asyncTask.execute(urlWebService);
+
     }
 
     @Override
     public void processFinish(String output) {
-        try {
-            dbHelper.fillQuestionsTable(jsonHelper.getQuestions(output));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(output!="badCode") {
+
+            try {
+                Log.d("dbHelperbefore Response", output);
+                List<Question> questions = jsonHelper.getQuestions(output);
+                dbHelper.fillQuestionsTable(questions);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+
         }
     }
 

@@ -64,16 +64,16 @@ class HttpsPostAsyncTask extends AsyncTask<String, Void, Void> {
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
                 String response = convertInputStreamToString(inputStream);
+
                 onPostExecute(response);
-                Log.d("response", response);
 
             } else {
-                Log.d("response", "niepowodzenie");
+                onPostExecute("badCode");
             }
 
             urlConnection.disconnect();
         } catch (Exception e) {
-            Log.d("response", e.getLocalizedMessage());
+            Log.d("Response", e.getLocalizedMessage());
 
         }
         return null;
@@ -82,6 +82,7 @@ class HttpsPostAsyncTask extends AsyncTask<String, Void, Void> {
 
     private void onPostExecute(String result) {
         delegate.processFinish(result);
+
     }
 
     private String convertInputStreamToString(InputStream inputStream) {
