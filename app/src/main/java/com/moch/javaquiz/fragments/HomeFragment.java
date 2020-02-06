@@ -1,6 +1,7 @@
 package com.moch.javaquiz.fragments;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,21 +18,45 @@ import com.moch.javaquiz.R;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    
+    NoticeAdapter adapter;
+    List<Notice> noticeList;
+    RecyclerView recycleView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView rv = root.findViewById(R.id.recycleViewNotice);
 
-        List<Notice> noticeList = ((MainActivity) getActivity()).dbHelper.getAllNotices();
+        final SwipeRefreshLayout swipe = root.findViewById(R.id.swipeContainer);
 
-        NoticeAdapter na = new NoticeAdapter(noticeList);
-        rv.setAdapter(na);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipe.setRefreshing(false);
+            }
+        });
+        
+        recycleView = root.findViewById(R.id.recycleViewNotice);
+        
+        noticeList = ((MainActivity) getActivity()).dbHelper.getAllNotices();
+
+        adapter = new NoticeAdapter(noticeList);
+        recycleView.setAdapter(adapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
+        recycleView.setLayoutManager(llm);
 
         return root;
     }
+
+    private void refresh(){
+        ((MainActivity)getActivity()).getNewData();
+        noticeList.clear();
+        noticeList.addAll(((MainActivity) getActivity()).dbHelper.getAllNotices());
+        adapter.notifyDataSetChanged();
+    }
+
+
 }

@@ -83,6 +83,12 @@ public class QuestionFragment extends Fragment {
             }
         });
 
+        root.findViewById(R.id.button_exit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishQuiz();
+            }
+        });
         return root;
     }
 

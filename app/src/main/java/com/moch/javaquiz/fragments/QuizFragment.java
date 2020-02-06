@@ -34,15 +34,6 @@ public class QuizFragment extends Fragment {
 
         getCategories();
 
-        Button buttonUpdate = root.findViewById(R.id.buttonUpdate);
-
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         return root;
     }
 

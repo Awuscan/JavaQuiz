@@ -9,23 +9,21 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private AppBarConfiguration mAppBarConfiguration;
     private long backPressedTime;
 
-    private static final String urlWebService = "https://8879ae19.ngrok.io/getAllQuestions.php";
-    public JavaQuizDBHandler dbHelper;
-    public jsonHandler jsonHelper;
+    private static final String urlWebService = "https://8879ae19.ngrok.io/";
+    private static final String urlGetQuestions = "getAllQuestions.php";
+    private static final String urlGetNotices = "getAllNotices.php";
+    public static JavaQuizDBHandler dbHelper;
+    public static jsonHandler jsonHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +47,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         dbHelper = new JavaQuizDBHandler(this);
         jsonHelper = new jsonHandler();
-
-
-
-
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-
-        Map<String, String> postData = new HashMap<>();
-        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
-        asyncTask.delegate = this;
-        asyncTask.execute(urlWebService);
+        getNewData();
     }
 
     @Override
@@ -83,18 +73,28 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         backPressedTime = System.currentTimeMillis();
     }
 
-    public void getQuizQuestions() {
-
-    }
-
     @Override
     public void processFinish(String output) {
         try {
-            List<Question> questions = jsonHelper.getQuestions(output);
-            dbHelper.fillQuestionsTable(questions);
+            dbHelper.fillQuestionsTable(jsonHelper.getQuestions(output));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        try {
+            dbHelper.fillNoticesTable(jsonHelper.getNotices(output));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNewData(){
+        HttpsPostAsyncTask asyncTask1 = new HttpsPostAsyncTask();
+        asyncTask1.delegate = this;
+        asyncTask1.execute(urlWebService + urlGetQuestions);
+
+        HttpsPostAsyncTask asyncTask2 = new HttpsPostAsyncTask();
+        asyncTask2.delegate = this;
+        asyncTask2.execute(urlWebService + urlGetNotices);
     }
 
 }

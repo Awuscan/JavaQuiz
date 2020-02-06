@@ -19,4 +19,5 @@
     <string name="buttonNextSlide">Następny Slajd</string>
     <string name="buttonPreviousSlide">Poprzedni Slajd</string>
     <string name="updateQuestions">Aktualizuj pytania</string>
+    <string name="buttonExitQuiz">Przerwij Quiz</string>
 </resources>

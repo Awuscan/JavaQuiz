@@ -87,6 +87,13 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         }
     }
 
+    public void fillNoticesTable(List<Notice> notices) {
+        db.execSQL("DELETE FROM " + TABLE_NAME_NOTICES) ;
+        for(Notice notice : notices){
+            addNotice(notice);
+        }
+    }
+
     private void fillQuestionsTable() {
         Question q1 = new Question("A is correct", "Java", "A.", "B", "C", "D", true, false, false, false);
         addQuestion(q1);

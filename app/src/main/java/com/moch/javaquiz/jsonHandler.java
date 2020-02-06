@@ -1,7 +1,5 @@
 package com.moch.javaquiz;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +20,10 @@ public class jsonHandler {
     private static final String COLUMN_ANSWER3 = "answer3";
     private static final String COLUMN_ANSWER4 = "answer4";
 
+    private static final String COLUMN_DATE = "date";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_MESSAGE = "message";
+
     public List<Question> getQuestions(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
         List<Question> questions = new ArrayList<>();
@@ -41,6 +43,20 @@ public class jsonHandler {
             questions.add(question);
         }
         return questions;
+    }
+
+    public List<Notice> getNotices(String json) throws JSONException {
+        JSONArray jsonArray = new JSONArray(json);
+        List<Notice> notices = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            Notice notice = new Notice(
+                    obj.getString(COLUMN_DATE),
+                    obj.getString(COLUMN_TITLE),
+                    obj.getString(COLUMN_MESSAGE));
+            notices.add(notice);
+        }
+        return notices;
     }
 
     private boolean stringToBool(String s) {
