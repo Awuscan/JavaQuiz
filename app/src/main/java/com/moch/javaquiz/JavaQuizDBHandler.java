@@ -14,7 +14,7 @@ import java.util.List;
 public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JavaQuiz.db";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
     private static final String TABLE_NAME_QUESTIONS = "Questions";
     private static final String ID = "id";
@@ -70,6 +70,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         db.execSQL(SQL_CREATE_NOTICES_TABLE);
 
+        fillQuestionsTable();
         fillNoticesTable();
     }
 
@@ -81,13 +82,22 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     }
 
     public void fillQuestionsTable(List<Question> questions) {
-        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
+        //db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
         for(Question question : questions){
             addQuestion(question);
         }
     }
 
+    public void fillNoticesTable(List<Notice> notices) {
+        db.execSQL("DELETE FROM " + TABLE_NAME_NOTICES) ;
+        for(Notice notice : notices){
+            addNotice(notice);
+        }
+    }
+
     private void fillQuestionsTable() {
+        Log.d("Response", "fillQuestionsTable");
+
         Question q1 = new Question("A is correct", "Java", "A.", "B", "C", "D", true, false, false, false);
         addQuestion(q1);
         Question q2 = new Question("B is correct", "Web", "A", "B", "C", "D", false, true, false, false);

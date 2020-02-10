@@ -16,7 +16,7 @@ import com.moch.javaquiz.R;
 
 public class QuizFragment extends Fragment {
 
-    Spinner spinnerCategory;
+    private Spinner spinnerCategory;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,12 +32,7 @@ public class QuizFragment extends Fragment {
 
         spinnerCategory = root.findViewById(R.id.spinnerCategory);
 
-        spinnerCategory.setAdapter(
-                new ArrayAdapter<>(getActivity().getBaseContext(),
-                        android.R.layout.simple_spinner_dropdown_item,
-                        ((MainActivity) getActivity()).dbHelper.getAllCategories()));
-
-        spinnerCategory.setSelection(0);
+        getCategories();
 
         return root;
     }
@@ -53,5 +48,14 @@ public class QuizFragment extends Fragment {
         transaction.remove(this);
         transaction.replace(R.id.nav_host_fragment, newFragment);
         transaction.commit();
+    }
+
+    private void getCategories(){
+        spinnerCategory.setAdapter(
+                new ArrayAdapter<>(getActivity().getBaseContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        ((MainActivity) getActivity()).dbHelper.getAllCategories()));
+
+        spinnerCategory.setSelection(0);
     }
 }

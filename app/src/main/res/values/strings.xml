@@ -18,4 +18,7 @@
     <string name="exit">Naciśnij jeszcze raz, aby zamknąć aplikację.</string>
     <string name="buttonNextSlide">Następny Slajd</string>
     <string name="buttonPreviousSlide">Poprzedni Slajd</string>
+    <string name="updateQuestions">Aktualizuj pytania</string>
+    <string name="buttonExitQuiz">Przerwij Quiz</string>
+    <string name="next_answer">Następna odpowiedź</string>
 </resources>

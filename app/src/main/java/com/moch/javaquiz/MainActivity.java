@@ -13,15 +13,15 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private AppBarConfiguration mAppBarConfiguration;
     private long backPressedTime;
 
-    private static final String urlWebService = "https://8879ae19.ngrok.io/getAllQuestions.php";
+    private static final String urlWebService = "https://8879ae19.ngrok.io/";
+    private static final String urlGetQuestions = "getAllQuestions.php";
+    private static final String urlGetNotices = "getAllNotices.php";
     public static JavaQuizDBHandler dbHelper;
     public static jsonHandler jsonHelper;
 
@@ -47,8 +47,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         dbHelper = new JavaQuizDBHandler(this);
         jsonHelper = new jsonHandler();
+    }
 
-        getQuizQuestions();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNewData();
     }
 
     @Override
@@ -69,13 +73,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         backPressedTime = System.currentTimeMillis();
     }
 
-    public void getQuizQuestions() {
-        Map<String, String> postData = new HashMap<>();
-        HttpsPostAsyncTask asyncTask = new HttpsPostAsyncTask(postData);
-        asyncTask.delegate = this;
-        asyncTask.execute(urlWebService);
-    }
-
     @Override
     public void processFinish(String output) {
         try {
@@ -83,6 +80,21 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        try {
+            dbHelper.fillNoticesTable(jsonHelper.getNotices(output));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNewData(){
+        HttpsPostAsyncTask asyncTask1 = new HttpsPostAsyncTask();
+        asyncTask1.delegate = this;
+        asyncTask1.execute(urlWebService + urlGetQuestions);
+
+        HttpsPostAsyncTask asyncTask2 = new HttpsPostAsyncTask();
+        asyncTask2.delegate = this;
+        asyncTask2.execute(urlWebService + urlGetNotices);
     }
 
 }
