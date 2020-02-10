@@ -3,12 +3,12 @@ package com.moch.javaquiz;
 import com.moch.javaquiz.value_objects.Notice;
 import com.moch.javaquiz.value_objects.Question;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class jsonHandler {
 

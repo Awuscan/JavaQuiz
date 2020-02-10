@@ -1,13 +1,13 @@
 package com.moch.javaquiz.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -52,7 +52,7 @@ public class LabsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView,
                                        View selectedItemView, int position, long id) {
-                changeLab(spinnerLabs.getSelectedItemPosition()+1);
+                changeLab(spinnerLabs.getSelectedItemPosition() + 1);
             }
 
             @Override

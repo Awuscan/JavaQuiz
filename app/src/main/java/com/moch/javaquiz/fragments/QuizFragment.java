@@ -1,14 +1,14 @@
 package com.moch.javaquiz.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.widget.Spinner;
 
 import com.moch.javaquiz.MainActivity;
@@ -50,7 +50,7 @@ public class QuizFragment extends Fragment {
         transaction.commit();
     }
 
-    private void getCategories(){
+    private void getCategories() {
         spinnerCategory.setAdapter(
                 new ArrayAdapter<>(getActivity().getBaseContext(),
                         android.R.layout.simple_spinner_dropdown_item,

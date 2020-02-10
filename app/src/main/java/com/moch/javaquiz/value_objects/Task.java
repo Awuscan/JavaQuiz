@@ -6,7 +6,8 @@ public class Task {
     private int image;
     private String code;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(int lab, String task, int image, String code) {
         this.lab = lab;

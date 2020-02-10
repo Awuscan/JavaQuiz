@@ -14,20 +14,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
 
     private List<Notice> noticeList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView textDate;
-        public TextView textTitle;
-        public TextView textMessage;
-
-
-        public MyViewHolder(View view) {
-            super(view);
-            textDate = view.findViewById(R.id.date);
-            textTitle = view.findViewById(R.id.title);
-            textMessage = view.findViewById(R.id.message);
-        }
-    }
-
     public NoticeAdapter(List<Notice> noticeList) {
         this.noticeList = noticeList;
     }
@@ -50,5 +36,19 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MyViewHold
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.notice, parent, false);
         return new MyViewHolder(v);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView textDate;
+        public TextView textTitle;
+        public TextView textMessage;
+
+
+        public MyViewHolder(View view) {
+            super(view);
+            textDate = view.findViewById(R.id.date);
+            textTitle = view.findViewById(R.id.title);
+            textMessage = view.findViewById(R.id.message);
+        }
     }
 }
