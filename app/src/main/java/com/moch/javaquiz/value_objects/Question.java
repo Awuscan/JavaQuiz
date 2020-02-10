@@ -13,7 +13,8 @@ public class Question {
     private boolean answer3;
     private boolean answer4;
 
-    public Question() {}
+    public Question() {
+    }
 
     public Question(String question, String category, String option1, String option2, String option3, String option4, boolean answer1, boolean answer2, boolean answer3, boolean answer4) {
         this.question = question;

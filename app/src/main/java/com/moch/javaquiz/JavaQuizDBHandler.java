@@ -104,21 +104,21 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     }
 
     public void fillQuestionsTable(List<Question> questions) {
-        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
-        for(Question question : questions){
+        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS);
+        for (Question question : questions) {
             addQuestion(question);
         }
     }
 
     public void fillNoticesTable(List<Notice> notices) {
-        db.execSQL("DELETE FROM " + TABLE_NAME_NOTICES) ;
-        for(Notice notice : notices){
+        db.execSQL("DELETE FROM " + TABLE_NAME_NOTICES);
+        for (Notice notice : notices) {
             addNotice(notice);
         }
     }
 
     private void fillTasksTable() {
-        Task t1 = new Task(1,"1.1",0,"<!DOCTYPE html>\n" +
+        Task t1 = new Task(1, "1.1", 0, "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
                 "<meta charset=\"utf-8\">\n" +
@@ -146,9 +146,9 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 "</body>\n" +
                 "</html>");
         addTask(t1);
-        Task t2 = new Task(1,"1.2",0,"XD");
+        Task t2 = new Task(1, "1.2", 0, "XD");
         addTask(t2);
-        Task t3 = new Task(2,"2.1",0,"<!DOCTYPE html>\n" +
+        Task t3 = new Task(2, "2.1", 0, "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
                 "<meta charset=\"utf-8\">\n" +
@@ -173,7 +173,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 "</body>\n" +
                 "</html>");
         addTask(t3);
-        Task t4 = new Task(2,"2.2",0,"XD");
+        Task t4 = new Task(2, "2.2", 0, "XD");
         addTask(t4);
 
     }
@@ -282,27 +282,27 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     public List<Question> getCategoryQuestions(String category) {
         List<Question> questionList = new ArrayList<>();
 
-            db = getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM()", new String[]{category});
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM()", new String[]{category});
 
-            if (c.moveToFirst()) {
-                do {
-                    Question question = new Question();
-                    question.setQuestion(c.getString(c.getColumnIndex(COLUMN_QUESTION)));
-                    question.setCategory(c.getString(c.getColumnIndex(COLUMN_CATEGORY)));
-                    question.setOption1(c.getString(c.getColumnIndex(COLUMN_OPTION1)));
-                    question.setOption2(c.getString(c.getColumnIndex(COLUMN_OPTION2)));
-                    question.setOption3(c.getString(c.getColumnIndex(COLUMN_OPTION3)));
-                    question.setOption4(c.getString(c.getColumnIndex(COLUMN_OPTION4)));
-                    question.setAnswer1(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER1))));
-                    question.setAnswer2(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER2))));
-                    question.setAnswer3(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER3))));
-                    question.setAnswer4(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER4))));
-                    questionList.add(question);
-                } while (c.moveToNext());
-            }
+        if (c.moveToFirst()) {
+            do {
+                Question question = new Question();
+                question.setQuestion(c.getString(c.getColumnIndex(COLUMN_QUESTION)));
+                question.setCategory(c.getString(c.getColumnIndex(COLUMN_CATEGORY)));
+                question.setOption1(c.getString(c.getColumnIndex(COLUMN_OPTION1)));
+                question.setOption2(c.getString(c.getColumnIndex(COLUMN_OPTION2)));
+                question.setOption3(c.getString(c.getColumnIndex(COLUMN_OPTION3)));
+                question.setOption4(c.getString(c.getColumnIndex(COLUMN_OPTION4)));
+                question.setAnswer1(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER1))));
+                question.setAnswer2(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER2))));
+                question.setAnswer3(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER3))));
+                question.setAnswer4(intToBool(c.getInt(c.getColumnIndex(COLUMN_ANSWER4))));
+                questionList.add(question);
+            } while (c.moveToNext());
+        }
 
-            c.close();
+        c.close();
 
         return questionList;
     }
@@ -310,7 +310,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     public List<Question> getCategoryQuestions(String category, int number) {
         List<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM() LIMIT ?", new String[]{category, Integer.toString(number) });
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM() LIMIT ?", new String[]{category, Integer.toString(number)});
 
         if (c.moveToFirst()) {
             do {
