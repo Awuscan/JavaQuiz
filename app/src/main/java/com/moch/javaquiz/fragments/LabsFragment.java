@@ -1,7 +1,8 @@
 package com.moch.javaquiz.fragments;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,45 +12,47 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.github.barteksc.pdfviewer.PDFView;
+import com.moch.javaquiz.MainActivity;
 import com.moch.javaquiz.R;
+import com.moch.javaquiz.value_objects.Task;
+import com.moch.javaquiz.value_objects.TaskAdapter;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
 
 public class LabsFragment extends Fragment {
 
     private Spinner spinnerLabs;
-    private InputStream is = null;
-    private String files[];
-    private String path = "labs/";
-    ;
-    private AssetManager as;
-    private PDFView viewPDF;
+    private TaskAdapter adapter;
+    private List<Task> taskList;
+    private RecyclerView recycleView;
+    private List<Integer> labs;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_labs, container, false);
 
-        viewPDF = root.findViewById(R.id.pdfView);
-        as = getActivity().getAssets();
+        labs = MainActivity.dbHelper.getAllLabs();
+        taskList = MainActivity.dbHelper.getLabTasks(1);
 
-        try {
-            files = getActivity().getAssets().list(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        recycleView = root.findViewById(R.id.recycleViewTask);
+
+        adapter = new TaskAdapter(taskList);
+        recycleView.setAdapter(adapter);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recycleView.setLayoutManager(llm);
 
         spinnerLabs = root.findViewById(R.id.labsSpinner);
         spinnerLabs.setAdapter(
                 new ArrayAdapter<>(getActivity().getBaseContext(),
                         android.R.layout.simple_spinner_dropdown_item,
-                        files));
+                        labs));
         spinnerLabs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView,
                                        View selectedItemView, int position, long id) {
-                changePDF(spinnerLabs.getSelectedItem().toString());
+                changeLab(spinnerLabs.getSelectedItemPosition()+1);
             }
 
             @Override
@@ -61,13 +64,9 @@ public class LabsFragment extends Fragment {
         return root;
     }
 
-    private void changePDF(String file) {
-        try {
-            is = as.open(path + file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        viewPDF.fromStream(is).load();
+    private void changeLab(int labNumber) {
+        taskList.clear();
+        taskList.addAll(MainActivity.dbHelper.getLabTasks(labNumber));
+        adapter.notifyDataSetChanged();
     }
 }

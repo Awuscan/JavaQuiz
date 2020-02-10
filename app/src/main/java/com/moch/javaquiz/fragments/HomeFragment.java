@@ -11,17 +11,17 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.moch.javaquiz.MainActivity;
-import com.moch.javaquiz.Notice;
-import com.moch.javaquiz.NoticeAdapter;
+import com.moch.javaquiz.value_objects.Notice;
+import com.moch.javaquiz.value_objects.NoticeAdapter;
 import com.moch.javaquiz.R;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment {
     
-    NoticeAdapter adapter;
-    List<Notice> noticeList;
-    RecyclerView recycleView;
+    private NoticeAdapter adapter;
+    private List<Notice> noticeList;
+    private RecyclerView recycleView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, final Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
         
         recycleView = root.findViewById(R.id.recycleViewNotice);
         
-        noticeList = ((MainActivity) getActivity()).dbHelper.getAllNotices();
+        noticeList = MainActivity.dbHelper.getAllNotices();
 
         adapter = new NoticeAdapter(noticeList);
         recycleView.setAdapter(adapter);

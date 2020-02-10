@@ -8,13 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.moch.javaquiz.value_objects.Notice;
+import com.moch.javaquiz.value_objects.Question;
+import com.moch.javaquiz.value_objects.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JavaQuiz.db";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 13;
 
     private static final String TABLE_NAME_QUESTIONS = "Questions";
     private static final String ID = "id";
@@ -33,6 +37,12 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_MESSAGE = "message";
+
+    private static final String TABLE_NAME_TASKS = "Tasks";
+    private static final String COLUMN_LAB = "lab";
+    private static final String COLUMN_TASK = "task";
+    private static final String COLUMN_IMAGE = "image";
+    private static final String COLUMN_CODE = "code";
 
     private SQLiteDatabase db;
 
@@ -67,9 +77,20 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
                 COLUMN_MESSAGE + " TEXT " +
                 ")";
 
+        final String SQL_CREATE_TASKS_TABLE = "CREATE TABLE " +
+                TABLE_NAME_TASKS + " ( " +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_LAB + " INT, " +
+                COLUMN_TASK + " TEXT, " +
+                COLUMN_IMAGE + " INT, " +
+                COLUMN_CODE + " TEXT " +
+                ")";
+
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
         db.execSQL(SQL_CREATE_NOTICES_TABLE);
+        db.execSQL(SQL_CREATE_TASKS_TABLE);
 
+        fillTasksTable();
         fillQuestionsTable();
         fillNoticesTable();
     }
@@ -78,11 +99,12 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_QUESTIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_NOTICES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_TASKS);
         onCreate(db);
     }
 
     public void fillQuestionsTable(List<Question> questions) {
-        //db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
+        db.execSQL("DELETE FROM " + TABLE_NAME_QUESTIONS) ;
         for(Question question : questions){
             addQuestion(question);
         }
@@ -93,6 +115,67 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         for(Notice notice : notices){
             addNotice(notice);
         }
+    }
+
+    private void fillTasksTable() {
+        Task t1 = new Task(1,"1.1",0,"<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<meta charset=\"utf-8\">\n" +
+                "<title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<div id=\"container\" style=\"width:100%\">\n" +
+                "<div id=\"header\" style=\"background-color:#CCC;text-align:center;\">\n" +
+                "<h1 style=\"margin-bottom:0;\">Title</h1>\n" +
+                "</div>\n" +
+                "<div id=\"left menu\" style=\"background-color:#DDD;height:200px;width:20%;float:left;\">\n" +
+                "Left menu\n" +
+                "</div>\n" +
+                "<div id=\"content\" style=\"background-color:#FFF;height:200px;width:60%;\n" +
+                "float:left;\">\n" +
+                "Content\n" +
+                "</div>\n" +
+                "<div id=\"footer\" style=\"background-color:#CCC;clear:both;\n" +
+                "text-align:center;\">\n" +
+                "<img src=\"F_icon.svg\" height=\"40\" width=\"40\">\n" +
+                "&nbsp;&nbsp;&nbsp;\n" +
+                "<img src=\"T_icon.svg\" height=\"40\" width=\"40\">\n" +
+                "</div>\n" +
+                "</div>\n" +
+                "</body>\n" +
+                "</html>");
+        addTask(t1);
+        Task t2 = new Task(1,"1.2",0,"XD");
+        addTask(t2);
+        Task t3 = new Task(2,"2.1",0,"<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<meta charset=\"utf-8\">\n" +
+                "<title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<div id=\"container\" style=\"width:100%\">\n" +
+                "<header style=\"background-color:#CCC;\">\n" +
+                "<h1 style=\"margin-bottom:0;text-align:center;\">Title</h1>\n" +
+                "</header>\n" +
+                "<nav style=\"background-color:#DDD;height:200px;width:20%;float:left;\">\n" +
+                "Left menu\n" +
+                "</nav>\n" +
+                "<section style=\"background-color:#FFF;height:200px;width:80%;float:left;\"> Content\n" +
+                "</section>\n" +
+                "<footer style=\"background-color:#CCC;clear:both;text-align:center;\">\n" +
+                "<div><img src=\"F_icon.svg\" height=\"40\" width=\"40\">\n" +
+                "&nbsp;&nbsp;&nbsp;\n" +
+                "<img src=\"T_icon.svg\" height=\"40\" width=\"40\"></div>\n" +
+                "</footer>\n" +
+                "</div>\n" +
+                "</body>\n" +
+                "</html>");
+        addTask(t3);
+        Task t4 = new Task(2,"2.2",0,"XD");
+        addTask(t4);
+
     }
 
     private void fillQuestionsTable() {
@@ -117,6 +200,15 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         addNotice(n2);
         Notice n3 = new Notice("08-01-2020", "Wyniki Egzaminu w I terminie", "Wyniki do wglądu w USOS'ie. \nZapraszam na poprawe.");
         addNotice(n3);
+    }
+
+    private void addTask(Task task) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_LAB, task.getLab());
+        cv.put(COLUMN_TASK, task.getTask());
+        cv.put(COLUMN_IMAGE, task.getImage());
+        cv.put(COLUMN_CODE, task.getCode());
+        db.insert(TABLE_NAME_TASKS, null, cv);
     }
 
     private void addQuestion(Question question) {
@@ -191,7 +283,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         List<Question> questionList = new ArrayList<>();
 
             db = getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=? ORDER BY RANDOM()", new String[]{category});
+            Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM()", new String[]{category});
 
             if (c.moveToFirst()) {
                 do {
@@ -218,7 +310,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     public List<Question> getCategoryQuestions(String category, int number) {
         List<Question> questionList = new ArrayList<>();
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE category=? ORDER BY RANDOM() LIMIT ?", new String[]{category, Integer.toString(number) });
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTIONS + " WHERE " + COLUMN_CATEGORY + "=? ORDER BY RANDOM() LIMIT ?", new String[]{category, Integer.toString(number) });
 
         if (c.moveToFirst()) {
             do {
@@ -254,6 +346,41 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         c.close();
         return categories;
     }
+
+    public List<Integer> getAllLabs() {
+        List<Integer> labs = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + COLUMN_LAB + " FROM " + TABLE_NAME_TASKS + " GROUP BY " + COLUMN_LAB, null);
+
+        if (c.moveToFirst()) {
+            do {
+                labs.add(c.getInt(c.getColumnIndex(COLUMN_LAB)));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return labs;
+    }
+
+    public List<Task> getLabTasks(int labNumber) {
+        List<Task> taskList = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME_TASKS + " WHERE " + COLUMN_LAB + "=? ORDER BY " + COLUMN_TASK + " ASC", new String[]{Integer.toString(labNumber)});
+
+        if (c.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setLab(c.getInt(c.getColumnIndex(COLUMN_LAB)));
+                task.setTask(c.getString(c.getColumnIndex(COLUMN_TASK)));
+                task.setImage(c.getInt(c.getColumnIndex(COLUMN_IMAGE)));
+                task.setCode(c.getString(c.getColumnIndex(COLUMN_CODE)));
+                taskList.add(task);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return taskList;
+    }
+
 
     private boolean intToBool(int i) {
         return i >= 1;

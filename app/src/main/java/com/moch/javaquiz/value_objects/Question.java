@@ -1,4 +1,4 @@
-package com.moch.javaquiz;
+package com.moch.javaquiz.value_objects;
 
 public class Question {
 

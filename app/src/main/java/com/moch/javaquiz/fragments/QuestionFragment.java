@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.moch.javaquiz.MainActivity;
-import com.moch.javaquiz.Question;
+import com.moch.javaquiz.value_objects.Question;
 import com.moch.javaquiz.R;
 
 import java.util.Arrays;
