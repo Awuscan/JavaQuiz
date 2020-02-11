@@ -1,4 +1,4 @@
-package com.moch.javaquiz;
+package com.moch.javaquiz.value_objects;
 
 public class Notice {
 
@@ -6,7 +6,8 @@ public class Notice {
     private String title;
     private String message;
 
-    public Notice() {}
+    public Notice() {
+    }
 
     public Notice(String date, String title, String message) {
         this.date = date;

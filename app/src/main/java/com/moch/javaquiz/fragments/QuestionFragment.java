@@ -1,6 +1,8 @@
 package com.moch.javaquiz.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import com.moch.javaquiz.MainActivity;
-import com.moch.javaquiz.Question;
 import com.moch.javaquiz.R;
+import com.moch.javaquiz.value_objects.Question;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +72,7 @@ public class QuestionFragment extends Fragment {
 
         answers = new int[questionTotal][4];
 
-        for (int[] row: answers)
+        for (int[] row : answers)
             Arrays.fill(row, 0);
 
         finished = false;
@@ -83,12 +83,12 @@ public class QuestionFragment extends Fragment {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!finished){
+                if (!finished) {
                     if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked() || cb4.isChecked()) {
                         checkAnswer();
                         showNextQuestion();
                     }
-                }else{
+                } else {
                     viewNextAnswer();
                 }
 
@@ -148,27 +148,27 @@ public class QuestionFragment extends Fragment {
         }
 
         if (cb1.isChecked()) {
-            answers[questionCounter-1][0] = 1;
+            answers[questionCounter - 1][0] = 1;
         }
         if (cb2.isChecked()) {
-            answers[questionCounter-1][1] = 1;
+            answers[questionCounter - 1][1] = 1;
         }
         if (cb3.isChecked()) {
-            answers[questionCounter-1][2] = 1;
+            answers[questionCounter - 1][2] = 1;
         }
         if (cb4.isChecked()) {
-            answers[questionCounter-1][3] = 1;
+            answers[questionCounter - 1][3] = 1;
         }
 
 
-        if (questionCounter < questionTotal-1) {
+        if (questionCounter < questionTotal - 1) {
             buttonNext.setText(getResources().getText(R.string.next_question).toString());
         } else {
             buttonNext.setText(getResources().getText(R.string.finish).toString());
         }
     }
 
-    private void viewNextAnswer(){
+    private void viewNextAnswer() {
 
         if (questionCounter < questionTotal) {
             currentQuestion = questionList.get(questionCounter);
@@ -203,24 +203,24 @@ public class QuestionFragment extends Fragment {
                 cb4.setTextColor(getResources().getColor(R.color.colorTextWrong));
             }
 
-            if (answers[questionCounter][0] == 1){
+            if (answers[questionCounter][0] == 1) {
                 cb1.setChecked(true);
-            }else{
+            } else {
                 cb1.setChecked(false);
             }
-            if (answers[questionCounter][1] == 1){
+            if (answers[questionCounter][1] == 1) {
                 cb2.setChecked(true);
-            }else{
+            } else {
                 cb2.setChecked(false);
             }
-            if (answers[questionCounter][2] == 1){
+            if (answers[questionCounter][2] == 1) {
                 cb3.setChecked(true);
-            }else{
+            } else {
                 cb3.setChecked(false);
             }
-            if (answers[questionCounter][3] == 1){
+            if (answers[questionCounter][3] == 1) {
                 cb4.setChecked(true);
-            }else{
+            } else {
                 cb4.setChecked(false);
             }
 
@@ -228,7 +228,7 @@ public class QuestionFragment extends Fragment {
 
             String string = getResources().getText(R.string.question).toString() + questionCounter + "/" + questionTotal;
             textCount.setText(string);
-            if(questionCounter == questionTotal){
+            if (questionCounter == questionTotal) {
                 buttonNext.setText(getResources().getText(R.string.finish).toString());
             }
         } else {

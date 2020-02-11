@@ -1,24 +1,19 @@
 package com.moch.javaquiz.fragments;
 
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
 import com.moch.javaquiz.R;
 
 import java.io.IOException;
@@ -30,8 +25,8 @@ public class LecturesFragment extends Fragment {
     private Button buttonNext;
     private Button buttonPrevious;
 
-    private String lectures[];
-    private String slides[];
+    private String[] lectures;
+    private String[] slides;
     private String path = "lectures/";
     private ImageView imageView;
     private AssetManager as;
@@ -78,8 +73,7 @@ public class LecturesFragment extends Fragment {
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 nextSlide();
                 checkButtonNext();
                 checkButtonPrevious();
@@ -88,8 +82,7 @@ public class LecturesFragment extends Fragment {
 
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 previousSlide();
                 checkButtonNext();
                 checkButtonPrevious();
@@ -99,7 +92,7 @@ public class LecturesFragment extends Fragment {
         return root;
     }
 
-    private void changeLecture(String lecture)  {
+    private void changeLecture(String lecture) {
         try {
             slideNr = 0;
             this.lecture = lecture;
@@ -111,7 +104,7 @@ public class LecturesFragment extends Fragment {
         }
     }
 
-    private void loadLectureSlides(String lecture){
+    private void loadLectureSlides(String lecture) {
         try {
             slides = getActivity().getAssets().list(path + lecture);
         } catch (IOException e) {
@@ -119,8 +112,8 @@ public class LecturesFragment extends Fragment {
         }
     }
 
-    private void nextSlide()  {
-        if(slideNr < slides.length - 1){
+    private void nextSlide() {
+        if (slideNr < slides.length - 1) {
             slideNr++;
             try {
                 is = as.open(path + lecture + "/" + slides[slideNr]);
@@ -132,8 +125,8 @@ public class LecturesFragment extends Fragment {
 
     }
 
-    private void previousSlide(){
-        if(slideNr > 0){
+    private void previousSlide() {
+        if (slideNr > 0) {
             slideNr--;
             try {
                 is = as.open(path + lecture + "/" + slides[slideNr]);
@@ -145,18 +138,18 @@ public class LecturesFragment extends Fragment {
 
     }
 
-    private void checkButtonNext(){
-        if(slideNr == slides.length - 1){
+    private void checkButtonNext() {
+        if (slideNr == slides.length - 1) {
             buttonNext.setEnabled(false);
-        }else{
+        } else {
             buttonNext.setEnabled(true);
         }
     }
 
-    private void checkButtonPrevious(){
-        if(slideNr == 0){
+    private void checkButtonPrevious() {
+        if (slideNr == 0) {
             buttonPrevious.setEnabled(false);
-        }else{
+        } else {
             buttonPrevious.setEnabled(true);
         }
     }

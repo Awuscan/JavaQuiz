@@ -1,29 +1,33 @@
 package com.moch.javaquiz;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
-
-    private AppBarConfiguration mAppBarConfiguration;
-    private long backPressedTime;
 
     private static final String urlWebService = "https://8879ae19.ngrok.io/";
     private static final String urlGetQuestions = "getAllQuestions.php";
     private static final String urlGetNotices = "getAllNotices.php";
     public static JavaQuizDBHandler dbHelper;
     public static jsonHandler jsonHelper;
+    private AppBarConfiguration mAppBarConfiguration;
+    private long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
     }
 
-    public void getNewData(){
+    public void getNewData() {
         HttpsPostAsyncTask asyncTask1 = new HttpsPostAsyncTask();
         asyncTask1.delegate = this;
         asyncTask1.execute(urlWebService + urlGetQuestions);
@@ -97,4 +101,17 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         asyncTask2.execute(urlWebService + urlGetNotices);
     }
 
+    public Drawable getDrawable(String file){
+        try
+        {
+            InputStream ims = getAssets().open(file);
+            Drawable d = Drawable.createFromStream(ims, null);
+            ims.close();
+            return d;
+        }
+        catch(IOException ex)
+        {
+            return null;
+        }
+    }
 }
