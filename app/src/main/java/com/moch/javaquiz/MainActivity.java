@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
+                //R.id.nav_home,
                 R.id.nav_quiz,
                 R.id.nav_lectures,
                 R.id.nav_labs)
