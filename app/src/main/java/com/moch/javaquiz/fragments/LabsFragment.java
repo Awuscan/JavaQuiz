@@ -17,6 +17,7 @@ import com.moch.javaquiz.R;
 import com.moch.javaquiz.value_objects.Task;
 import com.moch.javaquiz.value_objects.TaskAdapter;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LabsFragment extends Fragment {
@@ -66,7 +67,11 @@ public class LabsFragment extends Fragment {
 
     private void changeLab(int labNumber) {
         taskList.clear();
-        taskList.addAll(MainActivity.dbHelper.getLabTasks(labNumber));
+        List<Task> tasks = MainActivity.dbHelper.getLabTasks(labNumber);
+        for(Task task : tasks){
+            task.setDrawable(  ((MainActivity) getActivity()).getDrawable(task.getImage()));
+        }
+        taskList.addAll(tasks);
         adapter.notifyDataSetChanged();
     }
 }

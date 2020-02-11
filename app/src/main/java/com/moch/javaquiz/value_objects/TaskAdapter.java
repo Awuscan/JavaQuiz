@@ -11,32 +11,13 @@ import com.moch.javaquiz.R;
 
 import java.util.List;
 
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     private List<Task> taskList;
 
     public TaskAdapter(List<Task> taskList) {
         this.taskList = taskList;
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Task c = taskList.get(position);
-        holder.textTask.setText(c.getTask());
-        //holder.imageView.setImageResource(c.getImage());
-        holder.textCode.setText(c.getCode());
-    }
-
-    @Override
-    public int getItemCount() {
-        return taskList.size();
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task, parent, false);
-        return new MyViewHolder(v);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -52,4 +33,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             textCode = view.findViewById(R.id.code);
         }
     }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Task c = taskList.get(position);
+        holder.textTask.setText(c.getTask());
+        holder.imageView.setImageDrawable(c.getDrawable());
+        holder.textCode.setText(c.getCode());
+    }
+
+    @Override
+    public int getItemCount() {
+        return taskList.size();
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.task, parent, false);
+
+        return new MyViewHolder(v);
+    }
+
+
 }

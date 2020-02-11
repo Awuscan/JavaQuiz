@@ -1,15 +1,18 @@
 package com.moch.javaquiz.value_objects;
 
+import android.graphics.drawable.Drawable;
+
 public class Task {
     private int lab;
     private String task;
-    private int image;
+    private String image;
     private String code;
+    private Drawable drawable = null;
 
     public Task() {
     }
 
-    public Task(int lab, String task, int image, String code) {
+    public Task(int lab, String task, String image, String code) {
         this.lab = lab;
         this.task = task;
         this.image = image;
@@ -32,11 +35,11 @@ public class Task {
         this.task = task;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -46,5 +49,13 @@ public class Task {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
     }
 }

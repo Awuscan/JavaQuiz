@@ -1,5 +1,6 @@
 package com.moch.javaquiz;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
@@ -97,4 +101,17 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         asyncTask2.execute(urlWebService + urlGetNotices);
     }
 
+    public Drawable getDrawable(String file){
+        try
+        {
+            InputStream ims = getAssets().open(file);
+            Drawable d = Drawable.createFromStream(ims, null);
+            ims.close();
+            return d;
+        }
+        catch(IOException ex)
+        {
+            return null;
+        }
+    }
 }
