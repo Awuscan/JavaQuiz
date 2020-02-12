@@ -472,6 +472,20 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
         return categories;
     }
 
+    public List<String> getAllCategoriesAndCount() {
+        List<String> categories = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT " + COLUMN_CATEGORY + ", COUNT(*) " + " FROM " + TABLE_NAME_QUESTIONS + " GROUP BY " + COLUMN_CATEGORY, null);
+
+        if (c.moveToFirst()) {
+            do {
+                categories.add(c.getString(c.getColumnIndex(COLUMN_CATEGORY)) + ", " + String.valueOf(c.getInt(1) + " pytań" ));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return categories;
+    }
+
     public List<Integer> getAllLabs() {
         List<Integer> labs = new ArrayList<>();
         db = getReadableDatabase();
