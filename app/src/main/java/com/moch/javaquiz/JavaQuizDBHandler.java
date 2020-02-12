@@ -18,7 +18,7 @@ import java.util.List;
 public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JavaQuiz.db";
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
 
     private static final String TABLE_NAME_QUESTIONS = "Questions";
     private static final String ID = "id";
@@ -294,16 +294,28 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
     private void fillQuestionsTable() {
         Log.d("Response", "fillQuestionsTable");
 
-        Question q1 = new Question("A is correct", "Java", "A.", "B", "C", "D", true, false, false, false);
+        Question q1 = new Question("Pytanie\nPoprawna odpowiedz: A", "Java", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", true, false, false, false);
         addQuestion(q1);
-        Question q2 = new Question("B is correct", "Web", "A", "B", "C", "D", false, true, false, false);
+        Question q2 = new Question("Pytanie\nPoprawna odpowiedz: B i C", "Java", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, true, true, false);
         addQuestion(q2);
-        Question q3 = new Question("C and D is correct", "Java", "A", "B", "C", "D", false, false, true, true);
+        Question q3 = new Question("Pytanie\nPoprawna odpowiedz: C", "Java", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, false, true, false);
         addQuestion(q3);
-        Question q4 = new Question("A and D is correct", "Web", "A", "B", "C", "D", true, false, false, true);
+        Question q4 = new Question("Pytanie\nPoprawna odpowiedz: A, B i D", "Java", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", true, true, false, true);
         addQuestion(q4);
-        Question q5 = new Question("A and D is correct", "Java", "A", "B", "C", "D", true, false, false, true);
+        Question q5 = new Question("Pytanie\nPoprawna odpowiedz: C i D", "Java", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, false, true, true);
         addQuestion(q5);
+        Question q6 = new Question("Pytanie\nPoprawna odpowiedz: B", "WEB", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, true, false, false);
+        addQuestion(q6);
+        Question q7 = new Question("Pytanie\nPoprawna odpowiedz: A, B, C i D", "WEB", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", true, true, true, true);
+        addQuestion(q7);
+        Question q8 = new Question("Pytanie\nPoprawna odpowiedz: D", "WEB", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, false, false, true);
+        addQuestion(q8);
+        Question q9 = new Question("Pytanie\nPoprawna odpowiedz: A i D", "WEB", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", true, false, false, true);
+        addQuestion(q9);
+        Question q10 = new Question("Pytanie\nPoprawna odpowiedz: B i C", "WEB", "Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D", false, true, true, false);
+        addQuestion(q10);
+
+
     }
 
     private void fillNoticesTable() {
