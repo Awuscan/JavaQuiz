@@ -25,7 +25,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         public ImageView imageView;
         public TextView textCode;
 
-
         public MyViewHolder(View view) {
             super(view);
             textTask = view.findViewById(R.id.task);
@@ -38,8 +37,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Task c = taskList.get(position);
         holder.textTask.setText(c.getTask());
+        holder.textTask.setTextIsSelectable(false);
+        holder.textTask.measure(-1, -1);//you can specific other values.
+        holder.textTask.setTextIsSelectable(true);
         holder.imageView.setImageDrawable(c.getDrawable());
         holder.textCode.setText(c.getCode());
+        holder.textCode.setTextIsSelectable(false);
+        holder.textCode.measure(-1, -1);//you can specific other values.
+        holder.textCode.setTextIsSelectable(true);
     }
 
     @Override
