@@ -47,10 +47,10 @@ public class QuestionFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         String category = null;
-        int count = 5;
+        int count = 0;
         if (bundle != null) {
             category = bundle.getString("category", null);
-            //count = bundle.getInt("count",1);
+            count = bundle.getInt("count",1);
         } else {
             finishQuiz();
         }

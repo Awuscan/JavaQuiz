@@ -17,7 +17,6 @@ import com.moch.javaquiz.R;
 import com.moch.javaquiz.value_objects.Task;
 import com.moch.javaquiz.value_objects.TaskAdapter;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LabsFragment extends Fragment {
@@ -26,13 +25,16 @@ public class LabsFragment extends Fragment {
     private TaskAdapter adapter;
     private List<Task> taskList;
     private RecyclerView recycleView;
-    private List<Integer> labs;
+    private List<Integer> labNumber;
+    private List<String> labNumberAndName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_labs, container, false);
 
-        labs = MainActivity.dbHelper.getAllLabs();
+        labNumber = MainActivity.dbHelper.getAllLabs();
+        labNumberAndName = MainActivity.dbHelper.getAllLabsNumberAndName();
+
         taskList = MainActivity.dbHelper.getLabTasks(1);
 
         recycleView = root.findViewById(R.id.recycleViewTask);
@@ -48,7 +50,7 @@ public class LabsFragment extends Fragment {
         spinnerLabs.setAdapter(
                 new ArrayAdapter<>(getActivity().getBaseContext(),
                         android.R.layout.simple_spinner_dropdown_item,
-                        labs));
+                        labNumberAndName));
         spinnerLabs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView,

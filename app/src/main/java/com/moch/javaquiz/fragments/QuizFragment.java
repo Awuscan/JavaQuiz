@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -36,22 +37,45 @@ public class QuizFragment extends Fragment {
             }
         });
 
+        categoryList = MainActivity.dbHelper.getAllCategories();
+
         spinnerCategory = root.findViewById(R.id.spinnerCategory);
 
         spinnerCount = root.findViewById(R.id.spinnerCount);
 
-        List<Integer> countList = new ArrayList<>();
-
-        for(int i = 1; i <= 15; i++){
-            countList.add(i);
-        }
-
-        spinnerCount.setAdapter(
+        spinnerCategory.setAdapter(
                 new ArrayAdapter<>(getActivity().getBaseContext(),
                         android.R.layout.simple_spinner_dropdown_item,
-                        countList));
+                        //MainActivity.dbHelper.getAllCategoriesAndCount()));
+                        categoryList));
 
-        getCategories();
+
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                String category = categoryList.get(spinnerCategory.getSelectedItemPosition());
+                List<Integer> countList = new ArrayList<>();
+                for(int i = 1; i <= MainActivity.dbHelper.getCategorySize(category); i++){
+                    countList.add(i);
+                }
+                spinnerCount.setAdapter(
+                        new ArrayAdapter<>(getActivity().getBaseContext(),
+                                android.R.layout.simple_spinner_dropdown_item,
+                                countList));
+                spinnerCount.setSelection(countList.size()/2);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                spinnerCategory.setSelection(0);
+            }
+
+        });
+
+        spinnerCategory.setSelection(0);
+
 
         return root;
     }
@@ -61,24 +85,12 @@ public class QuizFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putString("category", categoryList.get(spinnerCategory.getSelectedItemPosition()));
-        args.putInt("count", spinnerCount.getSelectedItemPosition()+1);
+        args.putInt("count", spinnerCount.getSelectedItemPosition() + 1);
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.remove(this);
         transaction.replace(R.id.nav_host_fragment, newFragment);
         transaction.commit();
-    }
-
-    private void getCategories() {
-        spinnerCategory.setAdapter(
-                new ArrayAdapter<>(getActivity().getBaseContext(),
-                        android.R.layout.simple_spinner_dropdown_item,
-                        //MainActivity.dbHelper.getAllCategoriesAndCount()));
-                        MainActivity.dbHelper.getAllCategories()));
-
-        categoryList = MainActivity.dbHelper.getAllCategories();
-
-        spinnerCategory.setSelection(0);
     }
 }
