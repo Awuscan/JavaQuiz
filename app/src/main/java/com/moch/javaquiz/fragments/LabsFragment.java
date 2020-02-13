@@ -24,20 +24,17 @@ public class LabsFragment extends Fragment {
     private Spinner spinnerLabs;
     private TaskAdapter adapter;
     private List<Task> taskList;
-    private RecyclerView recycleView;
-    private List<Integer> labNumber;
-    private List<String> labNumberAndName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_labs, container, false);
 
-        labNumber = MainActivity.dbHelper.getAllLabs();
-        labNumberAndName = MainActivity.dbHelper.getAllLabsNumberAndName();
+        List<Integer> labNumber = MainActivity.dbHelper.getAllLabs();
+        List<String> labNumberAndName = MainActivity.dbHelper.getAllLabsNumberAndName();
 
         taskList = MainActivity.dbHelper.getLabTasks(1);
 
-        recycleView = root.findViewById(R.id.recycleViewTask);
+        RecyclerView recycleView = root.findViewById(R.id.recycleViewTask);
 
         adapter = new TaskAdapter(taskList);
         recycleView.setAdapter(adapter);

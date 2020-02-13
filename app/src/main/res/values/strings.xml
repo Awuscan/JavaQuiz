@@ -10,7 +10,6 @@
     <string name="menu_labs">Instrukcje laboratoryjne</string>
     <string name="buttonStartQuiz">Rozpocznij Quiz</string>
     <string name="test_title">Wybierz kategorię oraz ilość pytań i rozpocznij quiz!</string>
-    <string name="check_answer">Sprawdź</string>
     <string name="next_question">Następne pytanie</string>
     <string name="finish">Zakończ</string>
     <string name="question">Pytanie:</string>
@@ -18,7 +17,6 @@
     <string name="exit">Naciśnij jeszcze raz, aby zamknąć aplikację.</string>
     <string name="buttonNextSlide">Następny Slajd</string>
     <string name="buttonPreviousSlide">Poprzedni Slajd</string>
-    <string name="updateQuestions">Aktualizuj pytania</string>
     <string name="buttonExitQuiz">Przerwij Quiz</string>
     <string name="next_answer">Następna odpowiedź</string>
     <string name="previous_answer">Poprzednia odpowiedź</string>

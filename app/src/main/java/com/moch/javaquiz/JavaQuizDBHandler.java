@@ -299,7 +299,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
     }
 
-    public void fillLabsTable() {
+    private void fillLabsTable() {
         addLab(1,"HTML/CSS");
         addLab(2,"JavaScript");
     }
@@ -501,7 +501,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
         if (c.moveToFirst()) {
             do {
-                categories.add(c.getString(c.getColumnIndex(COLUMN_CATEGORY)) + ", " + String.valueOf(c.getInt(1) + " pytań" ));
+                categories.add(c.getString(c.getColumnIndex(COLUMN_CATEGORY)) + ", " + c.getInt(1) + " pytań");
             } while (c.moveToNext());
         }
         c.close();
@@ -543,7 +543,7 @@ public class JavaQuizDBHandler extends SQLiteOpenHelper {
 
         if (c.moveToFirst()) {
             do {
-                labs.add( Integer.toString(c.getInt(c.getColumnIndex(COLUMN_LABNUMBER))) + " " + c.getString(c.getColumnIndex(COLUMN_LABNAME)) );
+                labs.add(c.getInt(c.getColumnIndex(COLUMN_LABNUMBER)) + " " + c.getString(c.getColumnIndex(COLUMN_LABNAME)) );
             } while (c.moveToNext());
         }
         c.close();

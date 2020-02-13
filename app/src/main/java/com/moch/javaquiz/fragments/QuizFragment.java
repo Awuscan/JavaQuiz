@@ -17,7 +17,6 @@ import com.moch.javaquiz.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class QuizFragment extends Fragment {
 
@@ -49,12 +48,9 @@ public class QuizFragment extends Fragment {
                         //MainActivity.dbHelper.getAllCategoriesAndCount()));
                         categoryList));
 
-
-
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
                 String category = categoryList.get(spinnerCategory.getSelectedItemPosition());
                 List<Integer> countList = new ArrayList<>();
                 for(int i = 1; i <= MainActivity.dbHelper.getCategorySize(category); i++){
@@ -71,11 +67,7 @@ public class QuizFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parentView) {
                 spinnerCategory.setSelection(0);
             }
-
         });
-
-        spinnerCategory.setSelection(0);
-
 
         return root;
     }

@@ -21,7 +21,6 @@ public class HomeFragment extends Fragment {
 
     private NoticeAdapter adapter;
     private List<Notice> noticeList;
-    private RecyclerView recycleView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, final Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        recycleView = root.findViewById(R.id.recycleViewNotice);
+        RecyclerView recycleView = root.findViewById(R.id.recycleViewNotice);
 
         noticeList = MainActivity.dbHelper.getAllNotices();
 
@@ -54,7 +53,7 @@ public class HomeFragment extends Fragment {
     private void refresh() {
         ((MainActivity) getActivity()).getNewData();
         noticeList.clear();
-        noticeList.addAll(((MainActivity) getActivity()).dbHelper.getAllNotices());
+        noticeList.addAll(MainActivity.dbHelper.getAllNotices());
         adapter.notifyDataSetChanged();
     }
 
