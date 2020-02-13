@@ -47,8 +47,10 @@ public class QuestionFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         String category = null;
+        int count = 0;
         if (bundle != null) {
             category = bundle.getString("category", null);
+            count = bundle.getInt("count",1);
         } else {
             finishQuiz();
         }
@@ -63,7 +65,7 @@ public class QuestionFragment extends Fragment {
         buttonNext = root.findViewById(R.id.button_next);
         buttonPrevious = root.findViewById(R.id.button_previous);
 
-        questionList = MainActivity.dbHelper.getCategoryQuestions(category);
+        questionList = MainActivity.dbHelper.getCategoryQuestions(category,count);
         questionTotal = questionList.size();
 
         if (questionTotal == 0) {
